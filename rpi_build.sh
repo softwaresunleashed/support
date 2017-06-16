@@ -1,16 +1,38 @@
-#export ARCH=arm
-#export CROSS_COMPILE=arm-bcm2708hardfp-linux-gnueabi-
-#export PATH=$PATH:/home/sudhanshu/rpi/tools/tools/arm-bcm2708/arm-bcm2708hardfp-linux-gnueabi/bin
 
 
 ##### Environment Defs
 LINUX_DIR=$PWD
+SUPPORT_FOLDER=$LINUX_DIR/../support
 TOOLCHAIN_ROOT=$LINUX_DIR/../tools/
+CONFIG_FILE="$LINUX_DIR/.config"
+KBUILD_OUTPUT=_build_folder
+
+##### Source Environment Variables
+source $SUPPORT_FOLDER/set_env.sh
+
+##### Shout Out for Build Params
+echo "============================================"
+echo "LINUX_DIR=$LINUX_DIR"
+echo "TOOLCHAIN_ROOT=$TOOLCHAIN_ROOT"
+echo "CONFIG_FILE=$CONFIG_FILE"
+echo "ARCH=$ARCH"
+echo "CROSS_COMPILE=$CROSS_COMPILE"
+echo "KBUILD_OUTPUT=$KBUILD_OUTPUT"
+echo "============================================"
+
+
+##### For first time build
+# Copy the default config file from default config folder
+#if [ ! -f "$CONFIG_FILE" ];
+#then
+#   echo ".config not found. Copying default Rpi Config..."
+#   cp arch/arm/configs/bcmrpi_defconfig .config
+#fi
 
 ##### Build commands
-#make ARCH=arm CROSS_COMPILE=arm-bcm2708hardfp-linux-gnueabi- bcmrpi_defconfig
-#make ARCH=arm CROSS_COMPILE=arm-bcm2708hardfp-linux-gnueabi- 
-make bcmrpi_defconfig && make -j4 KBUILD_OUTPUT=$KBUILD_OUTPUT
+#make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
+make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE 
+
 
 ##### Make Image
 #&& cd$TOOLCHAIN_ROOT/mkimage/

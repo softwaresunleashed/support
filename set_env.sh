@@ -6,6 +6,7 @@
 #	rpi_iot_kernel/linux $    source ../support/set_env.sh
 
 
+echo "Setting RPI Env Variables..."
 
 ##### Rpi 2 and below
 ARCH=arm
@@ -24,3 +25,6 @@ PATH=$PATH:$PWD/$TOOLCHAIN_BIN
 KBUILD_OUTPUT=_build_output_folder
 
 
+
+
+echo "Done."

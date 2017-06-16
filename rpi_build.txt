@@ -1,0 +1,13 @@
+export ARCH=arm
+export CROSS_COMPILE=arm-bcm2708hardfp-linux-gnueabi-
+export PATH=$PATH:/home/sudhanshu/rpi/tools/tools/arm-bcm2708/arm-bcm2708hardfp-linux-gnueabi/bin
+
+
+
+
+Build commands
+make ARCH=arm CROSS_COMPILE=arm-bcm2708hardfp-linux-gnueabi- bcmrpi_defconfig
+make ARCH=arm CROSS_COMPILE=arm-bcm2708hardfp-linux-gnueabi- 
+
+Make Image
+

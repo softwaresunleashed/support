@@ -23,14 +23,13 @@ echo "============================================"
 
 ##### For first time build
 # Copy the default config file from default config folder
-#if [ ! -f "$CONFIG_FILE" ];
-#then
-#   echo ".config not found. Copying default Rpi Config..."
-#   cp arch/arm/configs/bcmrpi_defconfig .config
-#fi
+if [ ! -f "$CONFIG_FILE" ];
+then
+   echo ".config not found. Using default Rpi Config..."
+   make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
+fi
 
 ##### Build commands
-#make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
 make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE 
 
 

@@ -13,6 +13,7 @@ source $SUPPORT_FOLDER/set_env.sh
 ##### Shout Out for Build Params
 echo "============================================"
 echo "LINUX_DIR=$LINUX_DIR"
+echo "CUR_DIR=$CUR_DIR"
 echo "TOOLCHAIN_ROOT=$TOOLCHAIN_ROOT"
 echo "CONFIG_FILE=$CONFIG_FILE"
 echo "ARCH=$ARCH"
@@ -34,9 +35,9 @@ make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE
 
 
 ##### Make Image
-#&& cd$TOOLCHAIN_ROOT/mkimage/
-#&& ./imagetool-uncompressed.py $LINUX_DIR/$KBUILD_OUTPUT/arch/arm/boot/zImage
-#&& cp kernel.img $CUR_DIR/kernel.img
-#&& echo "Kernel Image Location : " + $CUR_DIR/kernel.img
-  
+cd $TOOLCHAIN_ROOT/mkimage/
+./imagetool-uncompressed.py $LINUX_DIR/arch/arm/boot/zImage
+mv kernel.img $CUR_DIR/kernel.img
+echo "Kernel Image Location : $CUR_DIR/kernel.img"
+cd $CUR_DIR
 

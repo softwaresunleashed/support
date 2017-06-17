@@ -23,7 +23,7 @@ TOOLCHAIN_BIN=../tools/arm-bcm2708/arm-bcm2708hardfp-linux-gnueabi/bin
 ##### Generic Environment Variables
 PATH=$PATH:$PWD/$TOOLCHAIN_BIN
 KBUILD_OUTPUT=_build_output_folder
-
+CUR_DIR=$(pwd)
 
 
 

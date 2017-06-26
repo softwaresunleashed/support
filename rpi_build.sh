@@ -27,7 +27,12 @@ echo "============================================"
 if [ ! -f "$CONFIG_FILE" ];
 then
    echo ".config not found. Using default Rpi Config..."
+   
+   # For RPi Model 1
    make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
+   
+   # For RPi Model 2 and Above
+   #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcm2709_defconfig
 fi
 
 ##### Build commands

@@ -36,7 +36,7 @@ then
 fi
 
 ##### Build commands
-make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE 
+sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MOD_PATH=./MODULES_TO_COPY
 
 
 ##### Make Image

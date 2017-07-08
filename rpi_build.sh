@@ -35,14 +35,24 @@ then
    #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcm2709_defconfig
 fi
 
-##### Build commands
+##### Build commands 
+### RPi 1
+make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE
 sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MOD_PATH=./MODULES_TO_COPY
 
 
 ##### Make Image
-cd $TOOLCHAIN_ROOT/mkimage/
-./imagetool-uncompressed.py $LINUX_DIR/arch/arm/boot/zImage
-mv kernel.img $CUR_DIR/kernel.img
+### Old Image Creation Process
+#cd $TOOLCHAIN_ROOT/mkimage/
+#./imagetool-uncompressed.py $LINUX_DIR/arch/arm/boot/zImage
+#mv kernel.img $CUR_DIR/kernel.img
+
+### New Image Creation Process
+cd $LINUX_DIR/scripts/
+./mkknlimg $LINUX_DIR/arch/arm/boot/zImage $CUR_DIR/kernel.img
+
+
+### Display Build Artifact's location
 echo "Kernel Image Location : $CUR_DIR/kernel.img"
 cd $CUR_DIR
 

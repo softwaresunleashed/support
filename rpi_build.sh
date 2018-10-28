@@ -29,7 +29,8 @@ then
    echo ".config not found. Using default Rpi Config..."
    
    # For RPi Model 1
-   make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
+   #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
+   make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_iotk_defconfig  
    
    # For RPi Model 2 and Above
    #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcm2709_defconfig
@@ -37,8 +38,9 @@ fi
 
 ##### Build commands 
 ### RPi 1
-make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE
-sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MOD_PATH=./MODULES_TO_COPY
+make  ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE menuconfig && 
+make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE && 
+sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MOD_PATH=./MODULES_TO_COPY &&
 
 
 ##### Make Image
@@ -48,11 +50,11 @@ sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MO
 #mv kernel.img $CUR_DIR/kernel.img
 
 ### New Image Creation Process
-cd $LINUX_DIR/scripts/
-./mkknlimg $LINUX_DIR/arch/arm/boot/zImage $CUR_DIR/kernel.img
+cd $LINUX_DIR/scripts/ &&
+./mkknlimg $LINUX_DIR/arch/arm/boot/zImage $CUR_DIR/kernel.img && 
 
 
 ### Display Build Artifact's location
-echo "Kernel Image Location : $CUR_DIR/kernel.img"
+echo "Kernel Image Location : $CUR_DIR/kernel.img" && 
 cd $CUR_DIR
 

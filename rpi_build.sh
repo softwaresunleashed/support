@@ -2,10 +2,32 @@
 
 ##### Environment Defs
 LINUX_DIR=$PWD
+TOOLCHAIN_INSTALLED_FILEPATH=$LINUX_DIR/toolchain_installed
 SUPPORT_FOLDER=$LINUX_DIR/../support
 TOOLCHAIN_ROOT=$LINUX_DIR/../tools/
 CONFIG_FILE="$LINUX_DIR/.config"
 KBUILD_OUTPUT=_build_folder
+
+##### Install toolchains if not already installed
+if [ ! -f "$TOOLCHAIN_INSTALLED_FILEPATH" ];
+then
+    echo "Installing ToolChain Support Packages..."
+
+    echo "Install Bison"
+    echo "============="
+    sudo apt-get install bison
+
+    echo "Install Flex"
+    echo "============"
+    sudo apt-get install flex
+
+    echo "Install LibSSL"
+    echo "=============="
+    sudo apt-get install libssl-dev
+
+    # Mark end of tool chain packages ins
+    touch $TOOLCHAIN_INSTALLED_FILEPATH
+fi
 
 ##### Source Environment Variables
 source $SUPPORT_FOLDER/set_env.sh
@@ -27,19 +49,19 @@ echo "============================================"
 if [ ! -f "$CONFIG_FILE" ];
 then
    echo ".config not found. Using default Rpi Config..."
-   
+
    # For RPi Model 1
-   #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
-   make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_iotk_defconfig  
-   
+   make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_defconfig
+   #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcmrpi_iotk_defconfig
+
    # For RPi Model 2 and Above
    #make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE bcm2709_defconfig
 fi
 
-##### Build commands 
+##### Build commands
 ### RPi 1
-make  ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE menuconfig && 
-make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE && 
+make  ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE menuconfig &&
+make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE &&
 sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MOD_PATH=./MODULES_TO_COPY &&
 
 
@@ -51,10 +73,10 @@ sudo make -j4 ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE modules_install INSTALL_MO
 
 ### New Image Creation Process
 cd $LINUX_DIR/scripts/ &&
-./mkknlimg $LINUX_DIR/arch/arm/boot/zImage $CUR_DIR/kernel.img && 
+./mkknlimg $LINUX_DIR/arch/arm/boot/zImage $CUR_DIR/kernel.img &&
 
 
 ### Display Build Artifact's location
-echo "Kernel Image Location : $CUR_DIR/kernel.img" && 
+echo "Kernel Image Location : $CUR_DIR/kernel.img" &&
 cd $CUR_DIR
 
